@@ -2,7 +2,7 @@ package Server
 
 import (
 	controllers "WhatsAppClone/Controllers"
-	"WhatsAppClone/DB"
+	db "WhatsAppClone/DB"
 	"WhatsAppClone/Helpers"
 	"log"
 
@@ -11,27 +11,30 @@ import (
 )
 
 func Server() {
-
-	defer func() {
-		db, _ := DB.ConnectPG()
-
-		sqlDB, err := db.DB()
-		if err != nil {
-			log.Fatal(err)
-		}
-		sqlDB.Close()
-	}()
-
+	// Testing and connection to database
+	err := db.MongoDb()
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Creation of the server
 	app := fiber.New()
 
+	// Setting the port to be used
 	port := Helpers.GetEnv("port")
 	if port == "" {
 		port = "5000"
 	}
 
+	//Setting cors
 	app.Use(cors.New(cors.ConfigDefault))
 
-	app.Get("/", controllers.Main)
+	// Routing
 
+	//User
+	app.Get("/", controllers.HelloWold)
+	app.Post("/CreateUser", controllers.CreateUser)
+	app.Delete("/DeleteUser", controllers.DeleteUser)
+
+	//Starting server
 	log.Fatal(app.Listen(":" + port))
 }

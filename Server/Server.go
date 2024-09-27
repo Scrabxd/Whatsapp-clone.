@@ -33,6 +33,7 @@ func Server() {
 	//User
 	app.Get("/", controllers.HelloWold)
 	app.Post("/CreateUser", controllers.CreateUser)
+	app.Post("/SearchUsers", controllers.SearchUsers)
 	app.Delete("/DeleteUser", controllers.DeleteUser)
 
 	//Starting server

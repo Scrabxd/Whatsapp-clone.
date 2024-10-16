@@ -1,7 +1,7 @@
 package Helpers
 
 import (
-	types "WhatsAppClone/Types"
+	types "WhatsCl/Types"
 	"encoding/json"
 )
 

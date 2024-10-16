@@ -1,7 +1,7 @@
 package db
 
 import (
-	"WhatsAppClone/Helpers"
+	"WhatsCl/Helpers"
 	"fmt"
 	"log"
 
@@ -16,7 +16,7 @@ func MongoDb() error {
 		return fmt.Errorf("MONGO_URI is required")
 	}
 
-	err := mgm.SetDefaultConfig(nil, "WhatsappClone", options.Client().ApplyURI(uri))
+	err := mgm.SetDefaultConfig(nil, "WhatsCl", options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Printf("CONNECTION WITH MONGO REJECTED ❌: %v\n", err)
 		return err

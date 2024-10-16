@@ -1,19 +1,27 @@
 package controllers
 
 import (
-	"WhatsAppClone/Helpers"
-	models "WhatsAppClone/Models"
+	"WhatsCl/Helpers"
+	models "WhatsCl/Models/mongodb"
 	"context"
+	"fmt"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func CreateUser(c fiber.Ctx) error {
-	extension, phone_number, country, username := c.FormValue("extension"), c.FormValue("phone_number"), c.FormValue("country"), c.FormValue("username")
+func CreateUser(c *fiber.Ctx) error {
+	extension, phone_number, country, username, description := c.FormValue("extension"), c.FormValue("phone_number"), c.FormValue("country"), c.FormValue("username"), c.FormValue("description")
 
-	user := models.NewUser(extension, phone_number, country, username)
+	// profile_picture, err := c.FormFile("profile_picture")
+
+	if description == "" {
+		description = "Hola, estoy usando Whatsapp clone."
+	}
+
+	// user := models.NewUser(extension, phone_number, country, username, profile_picture)
+	user := models.NewUser(extension, phone_number, country, username, description)
 
 	var findUser models.Users
 
@@ -56,7 +64,7 @@ func CreateUser(c fiber.Ctx) error {
 	})
 }
 
-func DeleteUser(c fiber.Ctx) error {
+func DeleteUser(c *fiber.Ctx) error {
 	var res = make(map[string]interface{})
 
 	phone_number, extension := c.FormValue("phone_number"), c.FormValue("extension")
@@ -82,7 +90,7 @@ func DeleteUser(c fiber.Ctx) error {
 	return c.Status(200).JSON(res)
 }
 
-func SearchUsers(c fiber.Ctx) error {
+func SearchUsers(c *fiber.Ctx) error {
 	var res = make(map[string]interface{})
 
 	var users []models.Users
@@ -115,6 +123,11 @@ func SearchUsers(c fiber.Ctx) error {
 		"ExistingNumbers": ExistingNumbers,
 	}
 
-	return c.Status(200).JSON(res)
+	fmt.Println(ExistingNumbers)
 
+	return c.Status(200).JSON(res)
+}
+
+func UpdateData(c *fiber.Ctx) error {
+	return nil
 }

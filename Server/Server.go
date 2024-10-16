@@ -5,6 +5,7 @@ import (
 	db "WhatsCl/DB"
 	"WhatsCl/Helpers"
 	sockets "WhatsCl/Sockets"
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -24,6 +25,8 @@ func Server() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("Connection to PG stablished correctly ✅")
 	// Creation of the server
 	app := fiber.New()
 
